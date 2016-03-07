@@ -1,6 +1,6 @@
 Require Import Ascii List Program Ascii.
-Require Import GBaseN.Util GBaseN.ListUtil.
-Require GBaseN.Charset.
+Require Import Util ListUtil.
+Require Charset.
 
 Module Make(C : Charset.Sig).
 
@@ -19,22 +19,8 @@ Definition decode_ (r: nat) cs :=
      |> map byte_of_bits
 .
 
-Require Import Arith.Euclid.
-Definition modulo_charsize (n: nat) : nat.
- destruct (modulo C.char_size C.char_size_positive n) as [r].
- exact r.
-Defined.
 
-Lemma modulo_charsize_spec : forall n, Modulo n C.char_size (modulo_charsize n).
-Proof.
- intro n. unfold modulo_charsize. destruct (modulo _ _) as [r Hmod].
- destruct Hmod as [q Hmod]. exists q. destruct Hmod as [Hmod1 Hmod2]. now constructor.
-Qed.
-
-Lemma modulo_charsize_lt : forall n, modulo_charsize n < C.char_size.
-Proof.
- intro n. destruct (modulo_charsize_spec n) as [q Hmod]. now destruct Hmod as [Hmod1 _].
-Qed.
+Definition modulo_charsize n := modulo n C.char_size C.char_size_positive.
 
 Definition encode bs :=
   let r := byte_size * List.length bs |> modulo_charsize in

@@ -1,6 +1,6 @@
 Require Import Arith List Program.
-Require Import GBaseN.Util GBaseN.ListUtil.
-Require GBaseN.GBaseN.
+Require Import Util ListUtil.
+Require GBaseN.
 
 Declare Module C : Charset.Sig.
 Module GBaseN := GBaseN.Make C.
@@ -42,6 +42,6 @@ Theorem decode_encode : forall bs,
 Proof.
  intro bs. unfold GBaseN.decode, GBaseN.encode, Util.revapply.
  rewrite split_last_append. rewrite C.to_nat_of_nat.
- - apply decode_encode_. now apply GBaseN.modulo_charsize_spec.
- - now apply GBaseN.modulo_charsize_lt.
+ - apply decode_encode_. now apply modulo_spec.
+ - now apply modulo_lt.
 Qed.

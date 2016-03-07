@@ -1,4 +1,4 @@
-Require Import Arith List Program Ascii.
+Require Import Arith Euclid List Program Ascii.
 
 Definition revapply {A B: Type} (x: A) (f: A -> B) : B := f x.
 
@@ -22,6 +22,22 @@ Proof.
  intros b r Hmod. destruct Hmod as [q Hq]. inversion Hq.
  destruct r; [reflexivity| now rewrite plus_comm in H0].
 Qed.
+
+Definition modulo (a b: nat) : b > 0 -> nat.
+ intros Hb. destruct (Euclid.modulo b Hb a) as [r]. exact r.
+Defined.
+
+Lemma modulo_spec : forall a b Hb, Modulo a b (modulo a b Hb).
+Proof.
+ intros a b Hb. unfold modulo. destruct (Euclid.modulo _ _) as [r Hmod].
+ destruct Hmod as [q Hmod]. exists q. destruct Hmod as [Hmod1 Hmod2]. now constructor.
+Qed.
+
+Lemma modulo_lt : forall a b Hb, modulo a b Hb < b.
+Proof.
+ intros a b Hb. destruct (modulo_spec a b Hb) as [q Hmod]. now destruct Hmod as [Hmod1 _].
+Qed.
+
 
 Definition byte_size := 8.
 Definition bits_of_byte byte :=

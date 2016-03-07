@@ -1,6 +1,6 @@
 Require Import List Program Arith Arith.Euclid Omega.
 Require Import Recdef.
-Require Import GBaseN.Util.
+Require Import Util.
 
 Lemma map_id_forall : forall (A: Type) (f: A -> A) (xs: list A),
   List.Forall (fun x => f x = x) xs -> map f xs = xs.
