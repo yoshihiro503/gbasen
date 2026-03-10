@@ -1,2 +1,2 @@
 # gbasen
-Generalized Base-N encoding and decoding
+Generalized [Base64](https://en.wikipedia.org/wiki/Base64) encoding and decoding
